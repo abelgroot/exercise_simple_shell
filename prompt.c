@@ -1,8 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "main.h"
 
-int main(int ac, char **av)
+/**
+* main - Entry point of the program
+*
+* Return: Always 0.
+*/
+int main(void)
 {
 	char *line = NULL;
 	size_t len = 0;
@@ -10,25 +16,30 @@ int main(int ac, char **av)
 
 	while (1)
 	{
-		printf("$ ");
-		nread = _getline(&line, &len, stdin);
+		write(STDOUT_FILENO, "$ ", 2);
 
+	/* Read a line from standard input */
+	nread = _getline(&line, &len, STDIN_FILENO);
+
+	/* Handle EOF or error */
 	if (nread == -1)
 	{
 		if (feof(stdin))
 		{
-			printf("\n");
+			write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
-		else 
+		else
 		{
-		perror("getline");
-		break;
+			perror("_getline");
+			break;
 		}
 	}
 
-		printf("%s", line);
+	/* Write the read line to standard output */
+	write(STDOUT_FILENO, line, nread);
 	}
+
 	free(line);
 	return (0);
 }
