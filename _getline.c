@@ -63,7 +63,7 @@ ssize_t _getline(char **lineptr, size_t *n, int stream)
 		if (read(stream, buffer, 1) <= 0)
 			return (nread > 0 ? nread : -1);
 
-		if (nread >= size - 1)
+		if ((size_t)nread >= size - 1)
 			if (realloc_buffer(lineptr, n, size, nread) == -1)
 				return (-1);
 
