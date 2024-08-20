@@ -24,7 +24,7 @@ int main(void)
 		nread = getline(&line, &len, stdin);
 		if (nread == -1)
 		{
-			perror("Error:");
+			perror("./shell: ");
 			free(line);
 			exit(EXIT_FAILURE);
 		}
@@ -37,7 +37,7 @@ int main(void)
 		child_pid = fork();
 		if (child_pid == -1)
 		{
-			perror("Fork error");
+			perror("./shell: ");
 			free(line);
 			exit(EXIT_FAILURE);
 		}
@@ -46,7 +46,7 @@ int main(void)
 		{
 			if (execve(argv[0], argv, NULL) == -1)
 			{
-				perror("Execve error");
+				perror("./shell: ");
 			}
 			exit(EXIT_FAILURE);
 		}
